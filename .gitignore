@@ -2,6 +2,7 @@
 plan.md
 checklist.md
 description.md
+tests/
 
 # OS / editors
 .DS_Store
@@ -15,6 +16,10 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .coverage
+
+# Local scraper output / build
+out/
+build/
 
 # Terraform
 .terraform/

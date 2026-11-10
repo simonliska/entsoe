@@ -1,0 +1,15 @@
+# Datasets to scrape. Adding a block here (+ terraform apply) adds a new scraped endpoint.
+#
+#   schedule        EventBridge Scheduler expression (Europe/Bratislava time), used by Terraform
+#   params          raw ENTSO-E API params, see https://documenter.getpostman.com/view/7009892/2s93JtP3F6
+#   area_params     API params that receive the area EIC code
+#   areas           EIC codes, one request per area
+#   window          period relative to today: start_offset_days (1 = tomorrow), days
+#   max_period_days optional, max days per API request (default 365)
+
+generation_forecast_day_ahead:
+  schedule: "cron(0 19 * * ? *)"
+  params: { documentType: A71, processType: A01 }
+  area_params: [in_Domain]
+  areas: ["10YSK-SEPS-----K"]
+  window: { start_offset_days: 1, days: 1 }
