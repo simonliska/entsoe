@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 def fetch(params: dict[str, str], token: str, *, retries: int = 3, timeout: int = 30) -> bytes:
-    """GET the API with ``params``. The token goes in a header, so it never appears in URLs/logs."""
+    """GET the API with ``params``. The token goes in a header"""
     url = f"{API_URL}?{urllib.parse.urlencode(params)}"
     request = urllib.request.Request(url, headers={"SECURITY_TOKEN": token})
 
