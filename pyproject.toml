@@ -2,7 +2,7 @@
 name = "entsoe-scraper"
 version = "0.1.0"
 description = "Config-driven AWS Lambda that scrapes ENTSO-E Transparency Platform data to S3 as CSV."
-readme = "readme.md"
+readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "defusedxml>=0.7.1",
