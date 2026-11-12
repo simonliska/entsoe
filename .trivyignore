@@ -1,0 +1,13 @@
+# Accepted trivy findings (reviewed).
+
+# Unrestricted egress: the NAT instance must forward to any internet address, and the Lambda calls
+# the ENTSO-E API (no fixed IP range published) on 443 only.
+AWS-0104
+
+# S3 SSE-S3 (AES256) instead of a customer managed KMS key: enough for public energy data and the
+# state bucket, avoids KMS key cost. Revisit if data becomes sensitive.
+AWS-0132
+
+# False positive: fck-nat encrypts the root volume in its launch template (encryption = true by default),
+# trivy only checks the aws_instance resource.
+AWS-0131

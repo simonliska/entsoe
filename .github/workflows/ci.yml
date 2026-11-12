@@ -55,3 +55,4 @@ jobs:
           scan-ref: infra
           severity: HIGH,CRITICAL
           exit-code: "1"
+          trivyignores: .trivyignore
