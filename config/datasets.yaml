@@ -13,3 +13,11 @@ generation_forecast_day_ahead:
   area_params: [in_Domain]
   areas: ["10YSK-SEPS-----K"]
   window: { start_offset_days: 1, days: 1 }
+
+generation_actual_per_unit:
+  schedule: "cron(0 8 * * ? *)"
+  params: { documentType: A73, processType: A16 }
+  area_params: [in_Domain]
+  areas: ["10YSK-SEPS-----K"]
+  window: { start_offset_days: -1, days: 1 }
+  max_period_days: 1
