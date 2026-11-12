@@ -4,7 +4,7 @@ variable "region" {
 }
 
 variable "entsoe_token" {
-  description = "ENTSO-E API token. Pass via TF_VAR_entsoe_token, never commit it."
+  description = "ENTSO-E API token"
   type        = string
   sensitive   = true
   ephemeral   = true
