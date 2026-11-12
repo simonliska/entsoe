@@ -1,9 +1,7 @@
-# GitHub Actions deploys through OIDC: short-lived credentials, no AWS keys stored in GitHub.
-
-variable "github_repo" {
-  description = "owner/name of the GitHub repository allowed to deploy"
+variable "github_sub_prefix" {
+  description = "OIDC subject prefix: gh api repos/<owner>/<repo>/actions/oidc/customization/sub"
   type        = string
-  default     = "simonliska/entsoe"
+  default     = "repo:simonliska@40433119/entsoe@1452757608"
 }
 
 resource "aws_iam_openid_connect_provider" "github" {
@@ -13,8 +11,8 @@ resource "aws_iam_openid_connect_provider" "github" {
 
 data "aws_iam_policy_document" "github_assume" {
   for_each = {
-    plan  = "repo:${var.github_repo}:pull_request"
-    apply = "repo:${var.github_repo}:environment:production"
+    plan  = "${var.github_sub_prefix}:pull_request"
+    apply = "${var.github_sub_prefix}:environment:production"
   }
 
   statement {
@@ -39,7 +37,6 @@ data "aws_iam_policy_document" "github_assume" {
   }
 }
 
-# Pull requests: read-only + state lock.
 resource "aws_iam_role" "github_plan" {
   name               = "entsoe-scraper-github-plan"
   assume_role_policy = data.aws_iam_policy_document.github_assume["plan"].json
@@ -63,7 +60,6 @@ resource "aws_iam_role_policy" "github_plan_state_lock" {
   policy = data.aws_iam_policy_document.state_lock.json
 }
 
-# main branch via the "production" environment: full deploy rights.
 resource "aws_iam_role" "github_apply" {
   name               = "entsoe-scraper-github-apply"
   assume_role_policy = data.aws_iam_policy_document.github_assume["apply"].json
