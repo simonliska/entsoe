@@ -54,4 +54,12 @@ aws lambda invoke --function-name entsoe-scraper --cli-binary-format raw-in-base
 - **Secrets:** the API token is stored in SSM (encrypted) and never in Terraform state or git.
 - **Cost:** about $11/month (the NAT instance). Run `terraform -chdir=infra destroy` when not needed.
 
+## Design decisions
+
+- **fck-nat instead of NAT Gateway:** about $7/month instead of about $32. S3 traffic uses a free gateway endpoint.
+- **Config in YAML → SSM:** YAML in git is the source of truth. Terraform creates one SSM parameter and one schedule per dataset.
+- **Zip package, not a container:** the only dependency is `defusedxml`, so a container registry isn't needed.
+- **CI/CD with GitHub OIDC:** pull requests run `plan` with a read-only role; merging to `main` runs `apply`. No AWS keys are stored in GitHub.
+- **Simplifications:** one availability zone, one NAT instance, and an admin role for CI apply.
+
 ## Next steps

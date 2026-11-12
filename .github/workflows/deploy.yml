@@ -2,6 +2,7 @@ name: Deploy
 
 on:
   pull_request:
+    paths-ignore: ["**.md", "docs/**"]
     branches: [main]
   push:
     branches: [main]
